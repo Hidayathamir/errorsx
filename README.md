@@ -20,8 +20,6 @@ func Test_Wrap(t *testing.T) {
 	err = errorsx.Wrap(err, "err2")
 
 	assert.Equal(t, "err2:: err1", err.Error()) // <---
-	assert.Equal(t, "err1", errorsx.GetMessage(err))
-	assert.Equal(t, http.StatusInternalServerError, errorsx.GetCode(err))
 }
 ```
 
@@ -39,8 +37,6 @@ func Test_WrapE(t *testing.T) {
 	err = errorsx.WrapE(err, ErrBadRequest)
 
 	assert.Equal(t, "bad request:: record not found:: err1", err.Error()) // <---
-	assert.Equal(t, "err1", errorsx.GetMessage(err))
-	assert.Equal(t, http.StatusInternalServerError, errorsx.GetCode(err))
 
 	assert.True(t, errors.Is(err, ErrRecordNotFound)) // <--- able to use errors.Is
 	assert.True(t, errors.Is(err, ErrBadRequest))     // <--- able to use errors.Is
@@ -91,7 +87,6 @@ func Test_SetMessage(t *testing.T) {
 
 	assert.Equal(t, "~~err2~~:: err1", err.Error()) // <--- still have full error
 	assert.Equal(t, "err2", errorsx.GetMessage(err)) // <---
-	assert.Equal(t, http.StatusInternalServerError, errorsx.GetCode(err))
 }
 ```
 
@@ -108,7 +103,6 @@ func Test_SetMessageE(t *testing.T) {
 
 	assert.Equal(t, "~~insufficient storage~~:: err1", err.Error()) // <--- still have full error
 	assert.Equal(t, "insufficient storage", errorsx.GetMessage(err)) // <---
-	assert.Equal(t, http.StatusInternalServerError, errorsx.GetCode(err))
 
 	assert.True(t, errors.Is(err, ErrInsufficientStorage)) // <--- able to use errors.Is
 }
@@ -123,8 +117,6 @@ func Test_SetCode(t *testing.T) {
 	err := errors.New("err1")
 	err = errorsx.SetCode(err, http.StatusBadRequest)
 
-	assert.Equal(t, "--400-- err1", err.Error())
-	assert.Equal(t, "err1", errorsx.GetMessage(err))
 	assert.Equal(t, http.StatusBadRequest, errorsx.GetCode(err)) // <---
 }
 ```
