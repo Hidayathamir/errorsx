@@ -20,17 +20,24 @@ package main
 import (
 	"errors"
 	"fmt"
+	"net/http"
 
 	"github.com/Hidayathamir/errorsx"
 )
 
+var ErrForbidden = errors.New("this route is forbidden")
+
 func main() {
 	err := errors.New("err1")
 	err = errorsx.Wrap(err, "err2")
+	err = errorsx.SetMessageE(err, ErrForbidden)
+	err = errorsx.SetCode(err, http.StatusForbidden)
 
-	fmt.Println(err.Error())             // output: err2:: err1
-	fmt.Println(errorsx.GetMessage(err)) // output: err1
-	fmt.Println(errorsx.GetCode(err))    // output: 500
+	fmt.Println(err.Error())             // --403-- ~~this route is forbidden~~:: err2:: err1
+	fmt.Println(errorsx.GetMessage(err)) // this route is forbidden
+	fmt.Println(errorsx.GetCode(err))    // 403
+
+	fmt.Println(errors.Is(err, ErrForbidden)) // true, able to use errors.Is
 }
 ```
 
