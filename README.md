@@ -8,6 +8,32 @@ Also I want to set error message so my REST API return only error message and I 
 
 Also I want to set error code so my REST API return response code based on what I set [see feature](#6-set-error-code).
 
+## Get Started
+
+```go
+go get github.com/Hidayathamir/errorsx
+```
+
+```go
+package main
+
+import (
+	"errors"
+	"fmt"
+
+	"github.com/Hidayathamir/errorsx"
+)
+
+func main() {
+	err := errors.New("err1")
+	err = errorsx.Wrap(err, "err2")
+
+	fmt.Println(err.Error())             // output: err2:: err1
+	fmt.Println(errorsx.GetMessage(err)) // output: err1
+	fmt.Println(errorsx.GetCode(err))    // output: 500
+}
+```
+
 ## Feature
 
 #### 1. Wrap error
