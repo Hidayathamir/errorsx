@@ -17,9 +17,9 @@ func Test_AllFeature(t *testing.T) {
 	err = errorsx.SetMessageE(err, ErrForbidden)
 	err = errorsx.SetCode(err, http.StatusForbidden)
 
-	assert.Equal(t, "--403-- ~~this route is forbidden~~:: err2:: err1", err.Error()) // <---
-	assert.Equal(t, "this route is forbidden", errorsx.GetMessage(err))               // <---
-	assert.Equal(t, http.StatusForbidden, errorsx.GetCode(err))                       // <---
+	assert.Equal(t, "--403--:: ~~this route is forbidden~~:: err2:: err1", err.Error()) // <---
+	assert.Equal(t, "this route is forbidden", errorsx.GetMessage(err))                 // <---
+	assert.Equal(t, http.StatusForbidden, errorsx.GetCode(err))                         // <---
 
 	assert.True(t, errors.Is(err, ErrForbidden)) // <--- able to use errors.Is
 }

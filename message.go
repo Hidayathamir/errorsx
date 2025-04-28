@@ -3,7 +3,6 @@ package errorsx
 import (
 	"errors"
 	"fmt"
-	"regexp"
 	"strings"
 )
 
@@ -36,21 +35,21 @@ func GetMessage(err error) string {
 		return ""
 	}
 
-	re := regexp.MustCompile("~~(.*?)~~")
-	matches := re.FindStringSubmatch(err.Error())
-	var msg string
-	if len(matches) > 1 {
-		msg = matches[1]
-	} else {
-		errMsgList := strings.Split(err.Error(), ":: ")
-		msg = errMsgList[len(errMsgList)-1]
+	errStrList := strings.Split(err.Error(), ":: ")
+	for _, errStr := range errStrList {
+		if len(errStr) < 4 {
+			continue
+		}
+		prefix := errStr[:2]
+		middle := errStr[2 : len(errStr)-2]
+		suffix := errStr[len(errStr)-2:]
+		isValidFormat := prefix == "~~" && suffix == "~~"
+		if !isValidFormat {
+			continue
+		}
+		return middle
 	}
 
-	// rm code
-	re = regexp.MustCompile("--(.*?)--")
-	x := re.ReplaceAll([]byte(msg), []byte(""))
-
-	msg = strings.TrimSpace(string(x))
-
-	return msg
+	lastErrStr := errStrList[len(errStrList)-1]
+	return lastErrStr
 }

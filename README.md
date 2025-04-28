@@ -33,7 +33,7 @@ func main() {
 	err = errorsx.SetMessageE(err, ErrForbidden)
 	err = errorsx.SetCode(err, http.StatusForbidden)
 
-	fmt.Println(err.Error())             // --403-- ~~this route is forbidden~~:: err2:: err1
+	fmt.Println(err.Error())             // --403--:: ~~this route is forbidden~~:: err2:: err1
 	fmt.Println(errorsx.GetMessage(err)) // this route is forbidden
 	fmt.Println(errorsx.GetCode(err))    // 403
 

@@ -32,7 +32,7 @@ func TestSetCode(t *testing.T) {
 				err:  errors.New("haha:: hehe"),
 				code: 200,
 			},
-			wantErr: errors.New("--200-- haha:: hehe"),
+			wantErr: errors.New("--200--:: haha:: hehe"),
 		},
 	}
 	for _, tt := range tests {
@@ -76,21 +76,21 @@ func TestGetCode(t *testing.T) {
 		{
 			name: "error contain code",
 			args: args{
-				err: errors.New("--404-- haha:: hehe"),
+				err: errors.New("--404--:: haha:: hehe"),
 			},
 			want: 404,
 		},
 		{
 			name: "error contain multiple code",
 			args: args{
-				err: errors.New("--404-- haha:: --400-- hehe"),
+				err: errors.New("--404--:: haha:: --400--:: hehe"),
 			},
 			want: 404,
 		},
 		{
 			name: "",
 			args: args{
-				err: errors.New("transporthttp.(*Quote).Checkout:: usecase.(*Quote).Checkout:: extapi.(*B2bcartGRPC).GetCartsToCheckout:: --400-- !!fsefs!! error get list cart checkout:: rpc error: code = NotFound desc = transportgrpc.(*Cart).GetCartsToCheckout:: usecase.(*Cart).GetCartByCustIDForCheckout:: repo.(*Cart).GetCartListByIDListAndDealerCodePreloadAll:: ~~error get cart~~:: record not found"),
+				err: errors.New("transporthttp.(*Quote).Checkout:: usecase.(*Quote).Checkout:: extapi.(*B2bcartGRPC).GetCartsToCheckout:: --400--:: !!fsefs!! error get list cart checkout:: rpc error: code = NotFound desc = transportgrpc.(*Cart).GetCartsToCheckout:: usecase.(*Cart).GetCartByCustIDForCheckout:: repo.(*Cart).GetCartListByIDListAndDealerCodePreloadAll:: ~~error get cart~~:: record not found"),
 			},
 			want: 400,
 		},
